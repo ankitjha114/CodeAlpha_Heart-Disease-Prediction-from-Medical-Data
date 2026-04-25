@@ -1,0 +1,18 @@
+{
+    "users": [
+        {
+            "username": "Ankit Sir",
+            "password": "953efcde5b5b10ffa6db7a8a6cc12026a4e4523828c2245dcc98c9268e53b17c"
+        }
+    ],
+    "predictions": [
+        {
+            "username": "Ankit Sir",
+            "age": 50,
+            "chol": 200,
+            "bp": 120,
+            "prediction": 1,
+            "probability": 0.9261603951454163
+        }
+    ]
+}
