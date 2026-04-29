@@ -59,7 +59,6 @@ heart_data['risk_score'] = (
 
 print("\nAFTER FEATURE ENGINEERING")
 print(heart_data.head())
-# Pie Chart
 plt.figure()
 heart_data['target'].value_counts().plot.pie(autopct='%1.1f%%')
 plt.title("Target Distribution")
@@ -96,7 +95,6 @@ X_train, X_test, Y_train, Y_test = train_test_split(
 print("\nTrain shape:", X_train.shape)
 print("Test shape:", X_test.shape)
 
-#Handle IMbalaCe
 print("\nBefore SMOTE:", np.bincount(Y_train))
 
 smote = SMOTE()
@@ -104,7 +102,6 @@ X_train, Y_train = smote.fit_resample(X_train, Y_train)
 
 print("After SMOTE:", np.bincount(Y_train))
 
-#Model Trainnig
 models = {
     "Logistic": Pipeline([
         ('scaler', StandardScaler()),
@@ -141,13 +138,11 @@ for name in models:
     grid.fit(X_train, Y_train)
     grids[name] = grid
 
-#Cross Validation
 print("\nCROSS VALIDATION")
 for name, grid in grids.items():
     scores = cross_val_score(grid.best_estimator_, X, Y, cv=5)
     print(name, ":", scores, "Mean:", scores.mean())
 
-#Evaluation Result + ROC
 results = {}
 
 plt.figure()
@@ -171,7 +166,6 @@ plt.legend()
 plt.title("ROC Curve")
 plt.show()
 
-#Confusuion  MAtrix
 best_name = max(results, key=results.get)
 best_model = grids[best_name]
 
@@ -183,7 +177,6 @@ sns.heatmap(cm, annot=True, fmt='d')
 plt.title("Confusion Matrix")
 plt.show()
 
-#Feature Engineering
 if best_name in ["RF","XGB","LGBM"]:
     model = best_model.best_estimator_.named_steps['model']
     imp = model.feature_importances_
