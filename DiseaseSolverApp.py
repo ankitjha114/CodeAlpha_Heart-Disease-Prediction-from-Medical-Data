@@ -8,26 +8,14 @@ import seaborn as sns
 
 from db import *
 
-# ===============================
-# INIT DB
-# ===============================
 init_db()
 
-# ===============================
-# LOAD MODEL
-# ===============================
 model_path = os.path.join(os.path.dirname(__file__), "heart_model.pkl")
 model = joblib.load(model_path)
 
-# ===============================
-# SESSION STATE
-# ===============================
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
 
-# ===============================
-# LOGIN / SIGNUP
-# ===============================
 if not st.session_state.logged_in:
     st.title("🔐 Login / Signup")
 
@@ -52,9 +40,6 @@ if not st.session_state.logged_in:
             else:
                 st.error("Invalid credentials")
 
-# ===============================
-# MAIN APP
-# ===============================
 if st.session_state.logged_in:
 
     st.sidebar.title(f"Welcome {st.session_state.username}")
@@ -64,9 +49,7 @@ if st.session_state.logged_in:
         st.session_state.logged_in = False
         st.experimental_rerun()
 
-    # ===============================
-    # PREDICTION PAGE
-    # ===============================
+
     if page == "Prediction":
         st.title("❤️ Heart Disease Prediction")
 
@@ -94,7 +77,6 @@ if st.session_state.logged_in:
             'slope':[slope],'ca':[ca],'thal':[thal]
         })
 
-        # Feature Engineering
         input_data['age_chol'] = input_data['age'] * input_data['chol']
         input_data['bp_chol'] = input_data['trestbps'] * input_data['chol']
         input_data['chol_norm'] = input_data['chol'] / 400
@@ -112,9 +94,9 @@ if st.session_state.logged_in:
             probability = model.predict_proba(input_data)[0][1]
 
             if prediction == 1:
-                st.error(f"⚠️ High Risk ({probability:.2f})")
+                st.error(f"High Risk ({probability:.2f})")
             else:
-                st.success(f"✅ Low Risk ({probability:.2f})")
+                st.success(f"Low Risk ({probability:.2f})")
 
             save_prediction(
                 st.session_state.username,
@@ -124,11 +106,8 @@ if st.session_state.logged_in:
 
             st.bar_chart(input_data.T)
 
-    # ===============================
-    # DASHBOARD
-    # ===============================
     if page == "Dashboard":
-        st.title("📊 Dashboard")
+        st.title("Dashboard")
 
         data = get_user_predictions(st.session_state.username)
 
