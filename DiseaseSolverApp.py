@@ -17,7 +17,7 @@ if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
 
 if not st.session_state.logged_in:
-    st.title("🔐 Login / Signup")
+    st.title("Login / Signup")
 
     choice = st.selectbox("Choose", ["Login", "Signup"])
 
@@ -51,7 +51,7 @@ if st.session_state.logged_in:
 
 
     if page == "Prediction":
-        st.title("❤️ Heart Disease Prediction")
+        st.title("Heart Disease Prediction")
 
         col1, col2 = st.columns(2)
 
